@@ -37,6 +37,21 @@ export default function TextForm(props) {
         props.showAlert("Extra spaces removed!", "success");
     }
 
+    const speak = () => {
+        let msg = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(msg);
+        const toogle = document.getElementById('toggle')
+        if (toogle.textContent == "Speak") {
+            toogle.innerHTML = "Stop"
+        }
+        else {
+            toogle.innerHTML = "Speak"
+            if (toogle.innerHTML = "Speak"){
+                window.speechSynthesis.cancel()
+            }
+        }
+    }
+
     const [text, setText] = useState(''); 
     // text = "new text"; // Wrong way to change the state
     // setText("new text"); // Correct way to change the state
@@ -52,6 +67,7 @@ export default function TextForm(props) {
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClearClick}>Clear Text</button>
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCopy}>Copy Text</button>
             <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+            <button type="submit" onClick={speak} className="btn btn-warning mx-2 my-2" id="toggle">Speak</button>
         </div>
         <div className="container my-3" style={{color: props.mode==='dark'?'white':'#042743'}}>
             <h2>Your text summary</h2>
